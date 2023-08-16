@@ -1,3 +1,4 @@
+import { sessionSchema } from "./session.schema";
 import {
   userCreateSchema,
   userReturnSchema,
@@ -5,4 +6,10 @@ import {
   userUpdateSchema,
 } from "./user.schema";
 
-export { userCreateSchema, userReturnSchema, userSchema, userUpdateSchema };
+export {
+  userCreateSchema,
+  userReturnSchema,
+  userSchema,
+  userUpdateSchema,
+  sessionSchema,
+};
