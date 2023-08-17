@@ -1,14 +1,6 @@
-import { Route, Routes } from "react-router-dom";
-import { Login } from "../../pages/Login";
-import { Register } from "../../pages/Register";
-import { Home } from "../../pages/HomePage";
+import axios from "axios";
 
-export const RoutesMain = () => {
-  return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/" element={<Home />} />
-    </Routes>
-  );
-};
+export const api = axios.create({
+  baseURL: "http://localhost:3000",
+  timeout: 5000,
+});
