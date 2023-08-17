@@ -8,14 +8,25 @@ export const userRouter: Router = Router();
 userRouter.post(
   "",
   middlewares.validateBody(userCreateSchema),
+  middlewares.uniqueEmail,
   userController.create
 );
-userRouter.get("/:id", userController.read);
+userRouter.get("/:id", middlewares.userExists, userController.read);
 
 userRouter.patch(
   "/:id",
+  middlewares.userExists,
+  middlewares.verifyToken,
+  middlewares.isOwner,
   middlewares.validateBody(userUpdateSchema),
+  middlewares.uniqueEmail,
   userController.update
 );
 
-userRouter.delete("/:id", userController.destroy);
+userRouter.delete(
+  "/:id",
+  middlewares.verifyToken,
+  middlewares.userExists,
+  middlewares.isOwner,
+  userController.destroy
+);
