@@ -1,3 +1,4 @@
+import { inputExists } from "./inputExists.middleware";
 import { handleError } from "./handleError.middleware";
 import { isOwner } from "./isOwner.middleware";
 import { uniqueEmail } from "./uniqueEmail.middleware";
@@ -12,4 +13,5 @@ export default {
   isOwner,
   userExists,
   uniqueEmail,
+  inputExists,
 };

@@ -12,11 +12,16 @@ const create = async (
   return inputSchema.parse(Input);
 };
 
-const read = async (idInput: number): Promise<InputReturn> => {
-  const input = await inputRepository.findOne({
-    where: { id: idInput },
+const readAllOfUser = async (idUser: number): Promise<Input[]> => {
+  const inputs = await inputRepository.find({
+    where: { user: { id: idUser } },
   });
-  return input;
+  return inputs;
+};
+
+const readAll = async (): Promise<Input[]> => {
+  const inputs = await inputRepository.find({ order: { createdAt: "DESC" } });
+  return inputs;
 };
 
 const update = async (
@@ -43,4 +48,4 @@ const destroy = async (Input: Input): Promise<void> => {
   await inputRepository.remove(Input);
 };
 
-export default { create, read, update, destroy };
+export default { create, readAllOfUser, readAll, update, destroy };

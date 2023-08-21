@@ -2,16 +2,30 @@ import { Request, Response } from "express";
 import { inputService } from "../services";
 import { InputReturn } from "../interfaces";
 import { User } from "../entities";
+import { inputSchema } from "../schemas";
 
 const create = async (req: Request, res: Response): Promise<Response> => {
   const user: User = res.locals.foundEntity;
   const input: InputReturn = await inputService.create(req.body, user);
   return res.status(201).json(input);
 };
-const read = async (req: Request, res: Response): Promise<Response> => {
-  const inputId: number = Number(req.params.id);
-  const input = await inputService.read(inputId);
-  return res.status(200).json(input);
+const readById = async (req: Request, res: Response): Promise<Response> => {
+  const input = res.locals.foundInput;
+  const inputParse = inputSchema.parse(input);
+  return res.status(200).json(inputParse);
+};
+
+const readAllOfUser = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const idUser: number = Number(req.params.id);
+  const inputs = await inputService.readAllOfUser(idUser);
+  return res.status(200).json(inputs);
+};
+const readAll = async (req: Request, res: Response): Promise<Response> => {
+  const inputs = await inputService.readAll();
+  return res.status(200).json(inputs);
 };
 
 const update = async (req: Request, res: Response): Promise<Response> => {
@@ -25,4 +39,4 @@ const destroy = async (req: Request, res: Response): Promise<Response> => {
   return res.status(204).json();
 };
 
-export default { create, read, update, destroy };
+export default { create, readById, readAllOfUser, update, destroy , readAll};

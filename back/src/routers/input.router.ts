@@ -1,6 +1,6 @@
 import { Router } from "express";
 import middlewares from "../middlewares";
-import { inputCreateSchema, inputUpdateSchema } from "../schemas";
+import { inputCreateSchema } from "../schemas";
 import { inputController } from "../controllers";
 
 export const inputRouter: Router = Router();
@@ -13,7 +13,13 @@ inputRouter.post(
   middlewares.validateBody(inputCreateSchema),
   inputController.create
 );
-inputRouter.get("/:id", middlewares.userExists, inputController.read);
+inputRouter.get("/eita", middlewares.verifyToken, inputController.readAll);
+inputRouter.get("/:idInput", middlewares.inputExists, inputController.readById);
+inputRouter.get(
+  "/user/:id",
+  middlewares.userExists,
+  inputController.readAllOfUser
+);
 
 // inputRouter.patch(
 //   "/:id",
