@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Input } from "./Pregao_insumos.entity";
+import { User } from "./user.entity";
 
 @Entity("ofertas")
 export class Offer {
@@ -22,4 +25,10 @@ export class Offer {
 
   @UpdateDateColumn({ type: "date" })
   updatedAt: string;
+
+  @ManyToOne(() => Input, input => input.offers)
+  input: Input;
+
+  @ManyToOne(() => User, (user) => user.offers)
+  user: User;
 }

@@ -6,9 +6,12 @@ import {
   UpdateDateColumn,
   BeforeInsert,
   BeforeUpdate,
+  OneToMany,
 } from "typeorm";
 
 import { getRounds, hashSync } from "bcryptjs";
+import { Input } from "./Pregao_insumos.entity";
+import { Offer } from "./pregao_ofertas.entity";
 
 @Entity("users")
 export class User {
@@ -33,6 +36,13 @@ export class User {
   @UpdateDateColumn({ type: "date" })
   updatedAt: string;
 
+  @OneToMany(() => Input, input => input.user)
+  inputs: Input[];
+
+  @OneToMany(() => Offer, offer => offer.user)
+  offers: Offer[];
+
+
   @BeforeInsert()
   @BeforeUpdate()
   hashPassword() {
@@ -41,4 +51,6 @@ export class User {
       this.password = hashSync(this.password, 10);
     }
   }
+
+  
 }

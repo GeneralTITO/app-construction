@@ -5,6 +5,11 @@ import {
   userSchema,
   userUpdateSchema,
 } from "./user.schema";
+import {
+  inputCreateSchema,
+  inputSchema,
+  inputUpdateSchema,
+} from "./input.schema";
 
 export {
   userCreateSchema,
@@ -12,4 +17,7 @@ export {
   userSchema,
   userUpdateSchema,
   sessionSchema,
+  inputCreateSchema,
+  inputSchema,
+  inputUpdateSchema,
 };
