@@ -55,7 +55,7 @@ export const PregaoProvider = ({ children }: any) => {
     }
   };
 
-  const deletePregrao = async (id: number) => {};
+  // const deletePregrao = async (id: number) => {};
 
   const setInProgressPregao = async (id: number) => {
     try {

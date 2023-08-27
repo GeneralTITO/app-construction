@@ -26,7 +26,6 @@ interface Item {
 
 export const ShowItems = () => {
   const [items, setItems] = useState<Item[]>([]);
-  const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
@@ -37,10 +36,6 @@ export const ShowItems = () => {
     };
     getInsumos();
   }, []);
-
-  const handleEditClick = (itemId: number) => {
-    setSelectedItemId(itemId);
-  };
 
   const filteredItems = items.filter((item) =>
     item.item_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -82,7 +77,7 @@ export const ShowItems = () => {
                   <TableCell>{item.createdAt}</TableCell>
                   <TableCell>{item.updatedAt}</TableCell>
                   <TableCell>
-                    <Button onClick={() => handleEditClick(item.id)}>
+                    <Button>
                       <EditIcon />
                     </Button>
                   </TableCell>

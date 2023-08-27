@@ -35,8 +35,8 @@ export const ShowItemsCreated = ({ items, setItems }: any) => {
     const response = await api.get(`/pregao/user/created/${userId}`);
     setItems(response.data);
   };
-  const handleDeleteClick = (id: number) => {};
-  const handleEditClick = (id: number) => {};
+  // const handleDeleteClick = (id: number) => {};
+  // const handleEditClick = (id: number) => {};
 
   const filteredItems = items.filter((item: any) =>
     item.item_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -91,18 +91,8 @@ export const ShowItemsCreated = ({ items, setItems }: any) => {
                     >
                       Iniciar pregão
                     </Button>
-                    <Button
-                      variant="outlined"
-                      onClick={() => handleEditClick(item.id)}
-                    >
-                      Editar
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      onClick={() => handleDeleteClick(item.id)}
-                    >
-                      Apagar
-                    </Button>
+                    <Button variant="outlined">Editar</Button>
+                    <Button variant="outlined">Apagar</Button>
                   </TableCell>
                 </TableRow>
               ))}
