@@ -36,12 +36,11 @@ export class User {
   @UpdateDateColumn({ type: "date" })
   updatedAt: string;
 
-  @OneToMany(() => Input, input => input.user)
+  @OneToMany(() => Input, (input) => input.user)
   inputs: Input[];
 
-  @OneToMany(() => Offer, offer => offer.user)
+  @OneToMany(() => Offer, (offer) => offer.user)
   offers: Offer[];
-
 
   @BeforeInsert()
   @BeforeUpdate()
@@ -51,6 +50,4 @@ export class User {
       this.password = hashSync(this.password, 10);
     }
   }
-
-  
 }

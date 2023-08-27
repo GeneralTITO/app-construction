@@ -3,8 +3,10 @@ import express, { Application, json } from "express";
 import middlewares from "./middlewares";
 import { inputRouter, userRouter } from "./routers";
 import { sessionRouter } from "./routers/session.router";
+var cors = require("cors");
 
 const app: Application = express();
+app.use(cors());
 app.use(json());
 
 app.use("/user", userRouter);

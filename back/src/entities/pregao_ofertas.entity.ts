@@ -26,7 +26,7 @@ export class Offer {
   @UpdateDateColumn({ type: "date" })
   updatedAt: string;
 
-  @ManyToOne(() => Input, input => input.offers)
+  @ManyToOne(() => Input, (input) => input.offers)
   input: Input;
 
   @ManyToOne(() => User, (user) => user.offers)
