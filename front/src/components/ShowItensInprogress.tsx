@@ -24,7 +24,7 @@ interface Item {
   updatedAt: string;
 }
 
-export const ShowItems = () => {
+export const ShowItemsInprogress = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -32,7 +32,7 @@ export const ShowItems = () => {
   useEffect(() => {
     const userId = localStorage.getItem("@USERID");
     const getInsumos = async () => {
-      const response = await api.get(`/pregao/user/${userId}`);
+      const response = await api.get(`/pregao/user/inprogress/${userId}`);
       console.log(response);
       setItems(response.data);
     };
@@ -77,7 +77,15 @@ export const ShowItems = () => {
                   <TableCell>{item.id}</TableCell>
                   <TableCell>{item.item_name}</TableCell>
                   <TableCell>{item.amount}</TableCell>
-                  <TableCell>{item.description}</TableCell>
+                  <TableCell
+                    style={{
+                      maxWidth: "300px",
+                      fontSize: "12px",
+                      whiteSpace: "pre-wrap",
+                    }}
+                  >
+                    {item.description}
+                  </TableCell>
                   <TableCell>{item.expiration}</TableCell>
                   <TableCell>{item.status}</TableCell>
                   <TableCell>{item.createdAt}</TableCell>

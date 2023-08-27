@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
   Table,
   TableBody,
@@ -10,8 +10,8 @@ import {
   Button,
   TextField,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
 import { api } from "../services/api";
+import { PregaoContext } from "../contexts/PregaoContext";
 
 interface Item {
   id: number;
@@ -24,24 +24,31 @@ interface Item {
   updatedAt: string;
 }
 
-export const ShowItems = () => {
+export const ShowItemsCreated = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
+  const { setInProgressPregao } = useContext<any>(PregaoContext);
+
   useEffect(() => {
     const userId = localStorage.getItem("@USERID");
     const getInsumos = async () => {
-      const response = await api.get(`/pregao/user/${userId}`);
+      const response = await api.get(`/pregao/user/created/${userId}`);
       console.log(response);
       setItems(response.data);
     };
     getInsumos();
   }, []);
 
-  const handleEditClick = (itemId: number) => {
-    setSelectedItemId(itemId);
+  const handleInProgress = async (id: number) => {
+    await setInProgressPregao(id);
+    const userId = localStorage.getItem("@USERID");
+    const response = await api.get(`/pregao/user/created/${userId}`);
+    setItems(response.data);
   };
+  const handleDeleteClick = (id: number) => {};
+  const handleEditClick = (id: number) => {};
 
   const filteredItems = items.filter((item) =>
     item.item_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -55,6 +62,7 @@ export const ShowItems = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
         style={{ marginBottom: "16px" }}
       />
+      <Button variant="outlined">Criar e finalizar todas</Button>
       {filteredItems.length > 0 ? (
         <TableContainer component={Paper}>
           <Table>
@@ -65,9 +73,6 @@ export const ShowItems = () => {
                 <TableCell>Amount</TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell>Expiration</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Created At</TableCell>
-                <TableCell>Updated At</TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
@@ -77,14 +82,38 @@ export const ShowItems = () => {
                   <TableCell>{item.id}</TableCell>
                   <TableCell>{item.item_name}</TableCell>
                   <TableCell>{item.amount}</TableCell>
-                  <TableCell>{item.description}</TableCell>
+                  <TableCell
+                    style={{
+                      maxWidth: "300px",
+                      fontSize: "12px",
+                      whiteSpace: "pre-wrap",
+                    }}
+                  >
+                    {item.description}
+                  </TableCell>
                   <TableCell>{item.expiration}</TableCell>
-                  <TableCell>{item.status}</TableCell>
-                  <TableCell>{item.createdAt}</TableCell>
-                  <TableCell>{item.updatedAt}</TableCell>
-                  <TableCell>
-                    <Button onClick={() => handleEditClick(item.id)}>
-                      <EditIcon />
+                  <TableCell
+                    style={{
+                      maxWidth: "300px",
+                    }}
+                  >
+                    <Button
+                      variant="outlined"
+                      onClick={() => handleInProgress(item.id)}
+                    >
+                      Iniciar pregão
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      onClick={() => handleEditClick(item.id)}
+                    >
+                      Editar
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      onClick={() => handleDeleteClick(item.id)}
+                    >
+                      Apagar
                     </Button>
                   </TableCell>
                 </TableRow>
