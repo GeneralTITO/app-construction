@@ -7,12 +7,11 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/pt-br";
 import dayjs from "dayjs";
 import { api } from "../services/api";
-import { toast } from "react-toastify";
 import { ShowItemsCreated } from "./ShowItensCreated";
 dayjs.locale("pt-br");
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { PregaoContext } from "../contexts/PregaoContext";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 interface FormData {
   item_name: string;
   amount: string;
@@ -21,7 +20,8 @@ interface FormData {
 }
 
 export const CreatePregao: React.FC = () => {
-  const { createPregao} = useContext<any>(PregaoContext);
+  const { createPregao, itemsCreated, setItemsCreated } =
+    useContext<any>(PregaoContext);
   const {
     control,
     handleSubmit,
@@ -30,13 +30,19 @@ export const CreatePregao: React.FC = () => {
   } = useForm<FormData>();
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     const expiration = `${data.expiration.$D}/${data.expiration.$M + 1}/${
       data.expiration.$y
     }`;
     delete data.expiration;
     data.expiration = expiration;
+    data.status = "created";
     await createPregao(data, reset);
+    const userId = localStorage.getItem("@USERID");
+    const getInsumos = async () => {
+      const response = await api.get(`/pregao/user/created/${userId}`);
+      setItemsCreated(response.data);
+    };
+    getInsumos();
   };
 
   return (
@@ -123,7 +129,7 @@ export const CreatePregao: React.FC = () => {
           </Button>
         </div>
       </div>
-      <ShowItemsCreated />
+      <ShowItemsCreated items={itemsCreated} setItems={setItemsCreated} />
     </div>
   );
 };

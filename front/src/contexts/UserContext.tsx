@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { createContext, useState } from "react";
+import {  useNavigate } from "react-router-dom";
 import { api } from "../services/api";
 import { toast } from "react-toastify";
 
@@ -43,11 +43,9 @@ export const UserProvider = ({ children }: any) => {
   const userLogin = async (formData: any) => {
     try {
       const { data } = await api.post("/login", formData);
-      console.log(data);
       setUser(data.user_id);
       localStorage.setItem("@TOKEN", data.token);
       localStorage.setItem("@USERID", data.user_id);
-      console.log(data.is_constructor);
       if (data.is_constructor) {
         navigate("/homeConstructor");
       } else {
@@ -57,7 +55,6 @@ export const UserProvider = ({ children }: any) => {
       console.log(error);
       if (error.response?.data.message === "Invalid credentials") {
         toast.error("email ou senha incorretos");
-        console.log("O e-mail e a senha não correspondem.");
       }
     } finally {
     }
@@ -82,10 +79,9 @@ export const UserProvider = ({ children }: any) => {
 
   const userLogout = () => {
     setUser(null);
-    navigate("/");
+    navigate("/login");
     localStorage.removeItem("@TOKEN");
     localStorage.removeItem("@USERID");
-    // toast.warning("Deslogando...")
   };
 
   return (

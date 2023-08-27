@@ -33,7 +33,6 @@ export const ShowItemsInprogress = () => {
     const userId = localStorage.getItem("@USERID");
     const getInsumos = async () => {
       const response = await api.get(`/pregao/user/inprogress/${userId}`);
-      console.log(response);
       setItems(response.data);
     };
     getInsumos();

@@ -33,7 +33,6 @@ export const ShowItemsAccomplished = () => {
     const userId = localStorage.getItem("@USERID");
     const getInsumos = async () => {
       const response = await api.get(`/pregao/user/accomplished/${userId}`);
-      console.log(response);
       setItems(response.data);
     };
     getInsumos();
