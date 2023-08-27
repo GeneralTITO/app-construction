@@ -2,9 +2,9 @@ import { z } from "zod";
 
 const inputSchema = z.object({
   id: z.number().positive(),
-  item_name: z.string().max(250).min(3),
+  item_name: z.string().max(250).min(1),
   amount: z.string().max(250),
-  description: z.string().max(1000).min(5),
+  description: z.string().max(1000).min(1),
   expiration: z.string(),
   status: z.enum(["created", "in_progress", "accomplished"]),
   createdAt: z.string().or(z.date()),

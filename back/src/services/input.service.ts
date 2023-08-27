@@ -18,6 +18,24 @@ const readAllOfUser = async (idUser: number): Promise<Input[]> => {
   });
   return inputs;
 };
+const readCreatedOfUser = async (idUser: number): Promise<Input[]> => {
+  const inputs = await inputRepository.find({
+    where: { user: { id: idUser }, status: "created" },
+  });
+  return inputs;
+};
+const readInProgressOfUser = async (idUser: number): Promise<Input[]> => {
+  const inputs = await inputRepository.find({
+    where: { user: { id: idUser }, status: "in_progress" },
+  });
+  return inputs;
+};
+const readAccomplishedOfUser = async (idUser: number): Promise<Input[]> => {
+  const inputs = await inputRepository.find({
+    where: { user: { id: idUser }, status: "accomplished" },
+  });
+  return inputs;
+};
 
 const readAll = async (): Promise<Input[]> => {
   const inputs = await inputRepository.find({ order: { createdAt: "DESC" } });
@@ -43,4 +61,13 @@ const destroy = async (Input: Input): Promise<void> => {
   await inputRepository.remove(Input);
 };
 
-export default { create, readAllOfUser, readAll, update, destroy };
+export default {
+  create,
+  readAllOfUser,
+  readAll,
+  update,
+  destroy,
+  readAccomplishedOfUser,
+  readCreatedOfUser,
+  readInProgressOfUser,
+};

@@ -14,12 +14,27 @@ inputRouter.post(
   inputController.create
 );
 inputRouter.get("/", middlewares.verifyToken, inputController.readAll);
-inputRouter.get("/:idInput", middlewares.inputExists, inputController.readById);
+inputRouter.get(
+  "/user/created/:id",
+  middlewares.userExists,
+  inputController.readCreatedOfUser
+);
+inputRouter.get(
+  "/user/inprogress/:id",
+  middlewares.userExists,
+  inputController.readInProgressOfUser
+);
+inputRouter.get(
+  "/user/accomplished/:id",
+  middlewares.userExists,
+  inputController.readAccomplishedOfUser
+);
 inputRouter.get(
   "/user/:id",
   middlewares.userExists,
   inputController.readAllOfUser
 );
+inputRouter.get("/:idInput", middlewares.inputExists, inputController.readById);
 
 inputRouter.patch(
   "/:idInput",
