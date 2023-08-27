@@ -14,8 +14,8 @@ export class Offer {
   @PrimaryGeneratedColumn("increment")
   id: number;
 
-  @Column({ length: 250 })
-  valor: string;
+  @Column({ type: "decimal", precision: 10, scale: 2 })
+  valor: number;
 
   @Column({ type: "text", nullable: true })
   description: string | null | undefined;

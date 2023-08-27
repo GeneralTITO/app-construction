@@ -24,24 +24,19 @@ const readAll = async (): Promise<Input[]> => {
   return inputs;
 };
 
-const update = async (
-  payload: InputUpdate,
-  id: number
-): Promise<InputReturn> => {
+const update = async (payload: InputUpdate, id: number): Promise<any> => {
   const InputFound: Input | null = await inputRepository.findOne({
     where: { id: id },
   });
 
   const InputUpdated: Input = inputRepository.create({
-    ...InputFound!,
+    ...InputFound,
     ...payload,
   });
 
   await inputRepository.save(InputUpdated);
 
-  const Input = inputSchema.parse(InputUpdated);
-
-  return Input;
+  return InputUpdated;
 };
 
 const destroy = async (Input: Input): Promise<void> => {

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import middlewares from "../middlewares";
-import { inputCreateSchema } from "../schemas";
+import { inputCreateSchema, inputUpdateSchema } from "../schemas";
 import { inputController } from "../controllers";
 
 export const inputRouter: Router = Router();
@@ -13,7 +13,7 @@ inputRouter.post(
   middlewares.validateBody(inputCreateSchema),
   inputController.create
 );
-inputRouter.get("/eita", middlewares.verifyToken, inputController.readAll);
+inputRouter.get("/", middlewares.verifyToken, inputController.readAll);
 inputRouter.get("/:idInput", middlewares.inputExists, inputController.readById);
 inputRouter.get(
   "/user/:id",
@@ -21,20 +21,19 @@ inputRouter.get(
   inputController.readAllOfUser
 );
 
-// inputRouter.patch(
-//   "/:id",
-//   middlewares.userExists,
-//   middlewares.verifyToken,
-//   middlewares.isOwner,
-//   middlewares.validateBody(inputUpdateSchema),
-//   middlewares.uniqueEmail,
-//   inputController.update
-// );
+inputRouter.patch(
+  "/:idInput",
+  middlewares.inputExists,
+  middlewares.verifyToken,
+  middlewares.isInputOwner,
+  middlewares.validateBody(inputUpdateSchema),
+  inputController.update
+);
 
-// inputRouter.delete(
-//   "/:id",
-//   middlewares.verifyToken,
-//   middlewares.userExists,
-//   middlewares.isOwner,
-//   inputController.destroy
-// );
+inputRouter.delete(
+  "/:idInput",
+  middlewares.inputExists,
+  middlewares.verifyToken,
+  middlewares.isInputOwner,
+  inputController.destroy
+);

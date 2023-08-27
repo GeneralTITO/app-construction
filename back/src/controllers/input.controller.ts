@@ -29,14 +29,14 @@ const readAll = async (req: Request, res: Response): Promise<Response> => {
 };
 
 const update = async (req: Request, res: Response): Promise<Response> => {
-  const id: number = Number(req.params.id);
+  const id: number = Number(req.params.idInput);
   const input: InputReturn = await inputService.update(req.body, id);
   return res.status(200).json(input);
 };
 
 const destroy = async (req: Request, res: Response): Promise<Response> => {
-  await inputService.destroy(res.locals.foundEntity);
+  await inputService.destroy(res.locals.foundInput);
   return res.status(204).json();
 };
 
-export default { create, readById, readAllOfUser, update, destroy , readAll};
+export default { create, readById, readAllOfUser, update, destroy, readAll };

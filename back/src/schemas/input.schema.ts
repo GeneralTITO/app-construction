@@ -6,6 +6,7 @@ const inputSchema = z.object({
   amount: z.string().max(250),
   description: z.string().max(1000).min(5),
   expiration: z.string(),
+  status: z.enum(["created", "in_progress", "accomplished"]),
   createdAt: z.string().or(z.date()),
   updatedAt: z.string().or(z.date()),
 });
