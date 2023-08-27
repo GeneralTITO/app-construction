@@ -64,24 +64,25 @@ export const UserProvider = ({ children }: any) => {
 
   const userRegister = async (formData: any) => {
     try {
-      // setLoading(true);
+      setLoading(true);
 
       await api.post("/user", formData);
-      navigate("/login");
-      //   toast.success("Cadastro realizado com sucesso!");
+      navigate("/");
+      toast.success("Cadastro realizado com sucesso!");
     } catch (error: any) {
-      console.log(error);
-      if (error.response?.data === "Email already exists") {
-        // toast.error("Usuário já cadastrado");
+      if (error.response.data.message === "Email already exists") {
+        toast.error("Usuário já cadastrado");
+      } else {
+        toast.error(error.response.data.message);
       }
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   };
 
   const userLogout = () => {
     setUser(null);
-    navigate("/login");
+    navigate("/");
     localStorage.removeItem("@TOKEN");
     localStorage.removeItem("@USERID");
   };
