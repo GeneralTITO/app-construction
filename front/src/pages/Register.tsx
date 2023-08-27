@@ -113,7 +113,7 @@ export const Register = () => {
           </div>
         </form>
         <div className="flex items-center justify-end text-blue-950 underline cursor-pointer">
-          <Link to={"/login"}>
+          <Link to={"/"}>
             <span>Já tem conta? fazer login</span>
           </Link>
         </div>
