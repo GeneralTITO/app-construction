@@ -30,8 +30,8 @@ export const CreatePregao: React.FC = () => {
   } = useForm<FormData>();
 
   const onSubmit = async (data: any) => {
-    const expiration = `${data.expiration.$D}/${data.expiration.$M + 1}/${
-      data.expiration.$y
+    const expiration = `${data.expiration.$y}/${data.expiration.$M + 1}/${
+      data.expiration.$D
     }`;
     delete data.expiration;
     data.expiration = expiration;
