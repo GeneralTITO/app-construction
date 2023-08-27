@@ -1,12 +1,33 @@
-import { createContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, useCallback, useEffect } from "react";
 import { api } from "../services/api";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
+interface Item {
+  id: number;
+  item_name: string;
+  amount: string;
+  description: string;
+  expiration: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+}
 export const PregaoContext = createContext({});
 
 export const PregaoProvider = ({ children }: any) => {
-  const navigate = useNavigate();
+  const [itemsCreated, setItemsCreated] = useState<Item[]>();
+  // const [itemsInProgress, SetItemsInProgress] = useState();
+  // const [itemsaccomplished, SetItemsaccomplished] = useState();
+
+  useEffect(() => {
+    const userId = localStorage.getItem("@USERID");
+    const getInsumos = async () => {
+      const response = await api.get(`/pregao/user/created/${userId}`);
+      setItemsCreated(response.data);
+    };
+    getInsumos();
+  }, []);
 
   const createPregao = async (data: any, reset: any) => {
     try {
@@ -33,6 +54,9 @@ export const PregaoProvider = ({ children }: any) => {
       reset();
     }
   };
+
+  const deletePregrao = async (id: number) => {};
+
   const setInProgressPregao = async (id: number) => {
     try {
       const token = window.localStorage.getItem("@TOKEN");
@@ -62,7 +86,14 @@ export const PregaoProvider = ({ children }: any) => {
   };
 
   return (
-    <PregaoContext.Provider value={{ createPregao, setInProgressPregao }}>
+    <PregaoContext.Provider
+      value={{
+        createPregao,
+        setInProgressPregao,
+        itemsCreated,
+        setItemsCreated,
+      }}
+    >
       {children}
     </PregaoContext.Provider>
   );

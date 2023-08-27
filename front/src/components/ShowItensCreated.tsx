@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { api } from "../services/api";
 import { PregaoContext } from "../contexts/PregaoContext";
+import { boolean } from "zod";
 
 interface Item {
   id: number;
@@ -24,22 +25,10 @@ interface Item {
   updatedAt: string;
 }
 
-export const ShowItemsCreated = () => {
-  const [items, setItems] = useState<Item[]>([]);
-  const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
+export const ShowItemsCreated = ({ items, setItems }: any) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const { setInProgressPregao } = useContext<any>(PregaoContext);
-
-  useEffect(() => {
-    const userId = localStorage.getItem("@USERID");
-    const getInsumos = async () => {
-      const response = await api.get(`/pregao/user/created/${userId}`);
-      console.log(response);
-      setItems(response.data);
-    };
-    getInsumos();
-  }, []);
 
   const handleInProgress = async (id: number) => {
     await setInProgressPregao(id);
@@ -50,7 +39,7 @@ export const ShowItemsCreated = () => {
   const handleDeleteClick = (id: number) => {};
   const handleEditClick = (id: number) => {};
 
-  const filteredItems = items.filter((item) =>
+  const filteredItems = items.filter((item: any) =>
     item.item_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 

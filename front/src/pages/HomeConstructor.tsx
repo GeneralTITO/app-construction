@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Button, ButtonGroup, Container, Typography } from "@mui/material";
 import { CreatePregao } from "../components/CreatePregao";
-import { ShowItems } from "../components/ShowItens";
-import { ShowItemsCreated } from "../components/ShowItensCreated";
 import { ShowItemsInprogress } from "../components/ShowItensInprogress";
 import { ShowItemsAccomplished } from "../components/ShowItensAccomplished";
 import Header from "../components/Header";

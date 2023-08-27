@@ -27,7 +27,6 @@ export const Login = () => {
 
   const onSubmit = (data: LoginFormValues) => {
     userLogin(data);
-    console.log(data);
   };
 
   return (
