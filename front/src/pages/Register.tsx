@@ -22,7 +22,7 @@ interface RegisterFormValues {
 }
 
 export const Register = () => {
-  const { userRegister }: any = useContext(UserContext);
+  const { userRegister, loading }: any = useContext(UserContext);
   const {
     handleSubmit,
     register,
@@ -108,7 +108,7 @@ export const Register = () => {
               type="submit"
               className="bg-blue-500 py-3 text-white w-full rounded mb-4"
             >
-              Cadastrar
+              {loading ? "Processando..." : "Cadastrar"}
             </button>
           </div>
         </form>

@@ -16,7 +16,7 @@ interface LoginFormValues {
 }
 
 export const Login = () => {
-  const { userLogin }: any = useContext(UserContext);
+  const { userLogin, loading }: any = useContext(UserContext);
   const {
     handleSubmit,
     register,
@@ -66,8 +66,9 @@ export const Login = () => {
             <button
               type="submit"
               className="bg-blue-500 py-3 text-white w-full rounded mb-4"
+              disabled={loading ? true : false}
             >
-              Entrar
+              {loading ? "Processando..." : "Entrar"}
             </button>
           </div>
         </form>

@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
 import { toast } from "react-toastify";
 
@@ -7,6 +7,7 @@ export const UserContext = createContext({});
 
 export const UserProvider = ({ children }: any) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   // const { state } = useLocation();
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ export const UserProvider = ({ children }: any) => {
 
   const userLogin = async (formData: any) => {
     try {
+      setLoading(true);
       const { data } = await api.post("/login", formData);
       setUser(data.user_id);
       localStorage.setItem("@TOKEN", data.token);
@@ -56,6 +58,7 @@ export const UserProvider = ({ children }: any) => {
         toast.error("email ou senha incorretos");
       }
     } finally {
+      setLoading(false);
     }
   };
 
@@ -85,7 +88,7 @@ export const UserProvider = ({ children }: any) => {
 
   return (
     <UserContext.Provider
-      value={{ user, userLogin, userRegister, userLogout }}
+      value={{ user, userLogin, userRegister, userLogout, loading }}
     >
       {children}
     </UserContext.Provider>
