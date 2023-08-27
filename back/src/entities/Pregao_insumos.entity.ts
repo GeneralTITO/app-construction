@@ -36,6 +36,6 @@ export class Input {
   @ManyToOne(() => User, (user) => user.inputs)
   user: User;
 
-  @OneToMany(() => Offer, offer => offer.input)
+  @OneToMany(() => Offer, (offer) => offer.input)
   offers: Offer[];
 }

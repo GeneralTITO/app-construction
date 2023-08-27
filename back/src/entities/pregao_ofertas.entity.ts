@@ -20,6 +20,9 @@ export class Offer {
   @Column({ type: "text", nullable: true })
   description: string | null | undefined;
 
+  @Column({ default: false })
+  accepted: boolean;
+
   @CreateDateColumn({ type: "date" })
   createdAt: string;
 
