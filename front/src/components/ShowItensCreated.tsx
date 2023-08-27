@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import {
   Table,
   TableBody,
@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { api } from "../services/api";
 import { PregaoContext } from "../contexts/PregaoContext";
-import { boolean } from "zod";
 
 interface Item {
   id: number;

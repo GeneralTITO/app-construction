@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserContext } from "../contexts/UserContext";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 const schema = z.object({
   email: z.string().email(),
@@ -16,12 +16,10 @@ interface LoginFormValues {
 }
 
 export const Login = () => {
-  const [loading, setLoading] = useState(false);
   const { userLogin }: any = useContext(UserContext);
   const {
     handleSubmit,
     register,
-    reset,
     formState: { errors },
   } = useForm<LoginFormValues>({ resolver: zodResolver(schema) });
 
