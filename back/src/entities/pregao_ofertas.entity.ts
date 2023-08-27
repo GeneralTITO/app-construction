@@ -20,8 +20,12 @@ export class Offer {
   @Column({ type: "text", nullable: true })
   description: string | null | undefined;
 
-  @Column({ default: false })
-  accepted: boolean;
+  @Column({
+    type: "enum",
+    enum: ["awaiting", "accepted", "rejected"],
+    default: "awaiting",
+  })
+  status: string;
 
   @CreateDateColumn({ type: "date" })
   createdAt: string;

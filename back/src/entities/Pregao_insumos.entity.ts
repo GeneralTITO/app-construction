@@ -27,6 +27,13 @@ export class Input {
   @Column({ type: "date" })
   expiration: string;
 
+  @Column({
+    type: "enum",
+    enum: ["created", "in_progress", "accomplished"],
+    default: "created",
+  })
+  status: string;
+
   @CreateDateColumn({ type: "date" })
   createdAt: string;
 
