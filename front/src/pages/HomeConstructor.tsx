@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Button, ButtonGroup, Container, Typography } from "@mui/material";
+import { CreatePregao } from "../components/CreatePregao";
+import { ShowItems } from "../components/ShowItens";
 
 export const HomeConstructor: React.FC = () => {
-  const [selectedButton, setSelectedButton] = useState<number | null>(null);
+  const [selectedButton, setSelectedButton] = useState<number | null>(0);
 
   const handleButtonClick = (buttonIndex: number) => {
     setSelectedButton(buttonIndex === selectedButton ? null : buttonIndex);
@@ -10,9 +12,9 @@ export const HomeConstructor: React.FC = () => {
 
   const renderContent = () => {
     if (selectedButton === 0) {
-      return <Typography>Conteúdo do Botão 1</Typography>;
+      return <ShowItems />;
     } else if (selectedButton === 1) {
-      return <Typography>Conteúdo do Botão 2</Typography>;
+      return <CreatePregao />;
     } else if (selectedButton === 2) {
       return <Typography>Conteúdo do Botão 3</Typography>;
     } else {

@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { UserContext } from "../contexts/UserContext";
 import { useContext, useState } from "react";
 
-
 const schema = z.object({
   email: z.string().email(),
   password: z.string().min(6).max(30),
