@@ -1,9 +1,9 @@
-import { createContext, useEffect } from "react";
+import { ReactNode, createContext, useEffect } from "react";
 import { api } from "../services/api";
 import { toast } from "react-toastify";
 import { useState } from "react";
 
-interface Item {
+export interface Item {
   id: number;
   item_name: string;
   amount: string;
@@ -13,21 +13,31 @@ interface Item {
   createdAt: string;
   updatedAt: string;
 }
-export const PregaoContext = createContext({});
 
-export const PregaoProvider = ({ children }: any) => {
-  const [itemsCreated, setItemsCreated] = useState<Item[]>();
+interface PregaoContextType {
+  createPregao: (data: any, reset: any) => void;
+  setInProgressPregao: (id: number) => void;
+  itemsCreated: Item[] | undefined;
+  getInsumos: () => void;
+}
+
+interface PregaoProviderProps {
+  children: ReactNode;
+}
+export const PregaoContext = createContext<PregaoContextType | undefined>(
+  undefined
+);
+
+export const PregaoProvider = ({ children }: PregaoProviderProps) => {
+  const [itemsCreated, setItemsCreated] = useState<Item[] | undefined>();
   // const [itemsInProgress, SetItemsInProgress] = useState();
   // const [itemsaccomplished, SetItemsaccomplished] = useState();
 
-  useEffect(() => {
+  const getInsumos = async () => {
     const userId = localStorage.getItem("@USERID");
-    const getInsumos = async () => {
-      const response = await api.get(`/pregao/user/created/${userId}`);
-      setItemsCreated(response.data);
-    };
-    getInsumos();
-  }, []);
+    const response = await api.get(`/pregao/user/created/${userId}`);
+    setItemsCreated(response.data);
+  };
 
   const createPregao = async (data: any, reset: any) => {
     try {
@@ -91,7 +101,7 @@ export const PregaoProvider = ({ children }: any) => {
         createPregao,
         setInProgressPregao,
         itemsCreated,
-        setItemsCreated,
+        getInsumos,
       }}
     >
       {children}

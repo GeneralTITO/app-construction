@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useContext, useEffect } from "react";
+import { Item, PregaoContext } from "../contexts/PregaoContext";
 
 interface FormData {
   item_name: string;
@@ -9,12 +11,18 @@ interface FormData {
   expiration: string;
 }
 const schema = z.object({
-  item_name: z.string().max(250).min(1),
-  amount: z.string().max(250).min(1),
-  description: z.string().max(1000).min(1),
-  expiration: z.string().min(1),
+  item_name: z.string().max(250).min(1, "esse campo é obrigatório"),
+  amount: z.string().max(250).min(1, "esse campo é obrigatório"),
+  description: z.string().max(1000).min(1, "esse campo é obrigatório"),
+  expiration: z.string().min(1, "esse campo é obrigatório"),
 });
 export const CriarPregao = () => {
+  const { getInsumos, itemsCreated }: any = useContext(PregaoContext);
+
+  useEffect(() => {
+    getInsumos();
+  }, []);
+
   const {
     handleSubmit,
     register,
@@ -23,6 +31,7 @@ export const CriarPregao = () => {
   const onsubmit = (data: FormData) => {
     console.log(data);
   };
+  console.log(itemsCreated);
   return (
     <main className="flex justify-around h-full">
       <div className="w-[50%] flex items-center flex-col justify-center border-2 border-yellow-500">
@@ -82,7 +91,12 @@ export const CriarPregao = () => {
           </div>
         </form>
       </div>
-      <div className="w-[50%] border-2 border-green-500"></div>
+      <div className="w-[50%] border-2 border-green-500 overflow-y-scroll">
+        {itemsCreated &&
+          itemsCreated.map((item: Item) => (
+            <div key={item.id}>{item.item_name}</div>
+          ))}
+      </div>
     </main>
   );
 };
