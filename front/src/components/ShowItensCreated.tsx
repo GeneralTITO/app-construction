@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -27,7 +27,7 @@ interface Item {
 export const ShowItemsCreated = ({ items, setItems }: any) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  const { setInProgressPregao } = useContext<any>(PregaoContext);
+  const { setInProgressPregao,setItemsCreated, } = useContext<any>(PregaoContext);
 
   const handleInProgress = async (id: number) => {
     await setInProgressPregao(id);
@@ -37,7 +37,14 @@ export const ShowItemsCreated = ({ items, setItems }: any) => {
   };
   // const handleDeleteClick = (id: number) => {};
   // const handleEditClick = (id: number) => {};
-
+  useEffect(() => {
+    const userId = localStorage.getItem("@USERID");
+    const getInsumos = async () => {
+      const response = await api.get(`/pregao/user/created/${userId}`);
+      setItemsCreated(response.data);
+    };
+    getInsumos();
+  }, []);
   const filteredItems = items.filter((item: any) =>
     item.item_name.toLowerCase().includes(searchTerm.toLowerCase())
   );

@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-import { userService } from "../services";
-import { UserReturn } from "../interfaces/user.interface";
 import offerService from "../services/offer.service";
 import { OfferReturn } from "../interfaces/orffer.interface";
 
@@ -11,6 +9,23 @@ const create = async (req: Request, res: Response): Promise<Response> => {
   return res.status(201).json(offer);
 };
 
+const readAllOfSeller = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const idUser: number = Number(req.params.id);
+  const offers = await offerService.readAllOfSeller(idUser);
+  return res.status(200).json(offers);
+};
+
+const readByIdInput = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const idInput: number = Number(req.params.idInput);
+  const offers = await offerService.readByIdInput(idInput);
+  return res.status(200).json(offers);
+};
 // const read = async (req: Request, res: Response): Promise<Response> => {
 //   const userId: number = Number(req.params.id);
 //   const user = await userService.read(userId);
@@ -28,4 +43,4 @@ const create = async (req: Request, res: Response): Promise<Response> => {
 //   return res.status(204).json();
 // };
 
-export default { create };
+export default { create, readAllOfSeller, readByIdInput };

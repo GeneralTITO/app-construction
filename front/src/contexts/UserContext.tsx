@@ -48,7 +48,7 @@ export const UserProvider = ({ children }: any) => {
       localStorage.setItem("@TOKEN", data.token);
       localStorage.setItem("@USERID", data.user_id);
       if (data.is_constructor) {
-        navigate("/homeConstructor");
+        navigate("/ClientShop");
       } else {
         navigate("/homeSeller");
       }

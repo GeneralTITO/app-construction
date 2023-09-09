@@ -1,24 +1,16 @@
 import { Route, Routes } from "react-router-dom";
 import { Login } from "../pages/Login";
 import { Register } from "../pages/Register";
-import { HomeConstructor } from "../pages/HomeConstructor";
-import { HomeSeller } from "../pages/HomeSeller";
-import { PregaoProvider } from "../contexts/PregaoContext";
+import { HomeConstructorPregao } from "../pages/ClientInput";
+import { ClientShop } from "../pages/ClientShop";
 
 export const RoutesMain = () => {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route
-        path="/homeConstructor"
-        element={
-          <PregaoProvider>
-            <HomeConstructor />
-          </PregaoProvider>
-        }
-      />
-      <Route path="/homeSeller" element={<HomeSeller />} />
+      <Route path="/ClientInput" element={<HomeConstructorPregao />} />
+      <Route path="/ClientShop" element={<ClientShop />} />
     </Routes>
   );
 };

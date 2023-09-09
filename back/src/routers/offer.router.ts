@@ -14,6 +14,23 @@ offerRouter.post(
   middlewares.validateBody(offerCreateSchema),
   offerController.create
 );
+
+offerRouter.get(
+  "/detalhes/:id/:idInput",
+  middlewares.userExists,
+  middlewares.verifyToken,
+  middlewares.isOwner,
+  middlewares.inputExists,
+  offerController.readByIdInput
+);
+
+offerRouter.get(
+  "/:id",
+  middlewares.userExists,
+  middlewares.verifyToken,
+  middlewares.isOwner,
+  offerController.readAllOfSeller
+);
 // offerRouter.get("/", middlewares.verifyToken, offerController.readAll);
 // offerRouter.get(
 //   "/user/created/:id",

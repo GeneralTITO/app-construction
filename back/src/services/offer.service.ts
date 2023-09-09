@@ -13,55 +13,24 @@ const create = async (
   return offerReturnSchema.parse(offer);
 };
 
-// const readAllOfUser = async (idUser: number): Promise<Offer[]> => {
-//   const inputs = await inputRepository.find({
-//     where: { user: { id: idUser } },
-//   });
-//   return inputs;
-// };
-// const readCreatedOfUser = async (idUser: number): Promise<Offer[]> => {
-//   const inputs = await inputRepository.find({
-//     where: { user: { id: idUser }, status: "created" },
-//   });
-//   return inputs;
-// };
-// const readInProgressOfUser = async (idUser: number): Promise<Offer[]> => {
-//   const inputs = await inputRepository.find({
-//     where: { user: { id: idUser }, status: "in_progress" },
-//   });
-//   return inputs;
-// };
-// const readAccomplishedOfUser = async (idUser: number): Promise<Offer[]> => {
-//   const inputs = await inputRepository.find({
-//     where: { user: { id: idUser }, status: "accomplished" },
-//   });
-//   return inputs;
-// };
+const readAllOfSeller = async (idUser: number): Promise<Offer[]> => {
+  const offers = await offerRepository.find({
+    where: { user: { id: idUser } },
+    relations: { input: true },
+  });
+  return offers;
+};
 
-// const readAll = async (): Promise<Offer[]> => {
-//   const inputs = await inputRepository.find({ order: { createdAt: "DESC" } });
-//   return inputs;
-// };
-
-// const update = async (payload: InputUpdate, id: number): Promise<any> => {
-//   const InputFound: Offer | null = await inputRepository.findOne({
-//     where: { id: id },
-//   });
-
-//   const InputUpdated: Offer = inputRepository.create({
-//     ...InputFound,
-//     ...payload,
-//   });
-
-//   await inputRepository.save(InputUpdated);
-
-//   return InputUpdated;
-// };
-
-// const destroy = async (Offer: Offer): Promise<void> => {
-//   await inputRepository.remove(Offer);
-// };
+const readByIdInput = async (idInput: number): Promise<any> => {
+  const offers = await offerRepository.find({
+    where: { input: { id: idInput } },
+    relations: { input: true },
+  });
+  return offers;
+};
 
 export default {
   create,
+  readAllOfSeller,
+  readByIdInput,
 };

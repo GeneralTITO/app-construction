@@ -1,15 +1,4 @@
 import { useEffect, useState } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Button,
-  TextField,
-} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { api } from "../services/api";
 
@@ -42,53 +31,54 @@ export const ShowItems = () => {
   );
 
   return (
-    <>
-      <TextField
-        label="Search Item"
+    <div className="p-4">
+      <input
+        type="text"
+        placeholder="Search Item"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        style={{ marginBottom: "16px" }}
+        className="border rounded px-2 py-1 mb-4"
       />
       {filteredItems.length > 0 ? (
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Item Name</TableCell>
-                <TableCell>Amount</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Expiration</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Created At</TableCell>
-                <TableCell>Updated At</TableCell>
-                <TableCell>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
+        <div className="overflow-x-auto">
+          <table className="w-full border">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Item Name</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Expiration</th>
+                <th>Status</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
               {filteredItems.map((item: Item) => (
-                <TableRow key={item.id}>
-                  <TableCell>{item.id}</TableCell>
-                  <TableCell>{item.item_name}</TableCell>
-                  <TableCell>{item.amount}</TableCell>
-                  <TableCell>{item.description}</TableCell>
-                  <TableCell>{item.expiration}</TableCell>
-                  <TableCell>{item.status}</TableCell>
-                  <TableCell>{item.createdAt}</TableCell>
-                  <TableCell>{item.updatedAt}</TableCell>
-                  <TableCell>
-                    <Button>
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.item_name}</td>
+                  <td>{item.amount}</td>
+                  <td>{item.description}</td>
+                  <td>{item.expiration}</td>
+                  <td>{item.status}</td>
+                  <td>{item.createdAt}</td>
+                  <td>{item.updatedAt}</td>
+                  <td>
+                    <button className="text-blue-500">
                       <EditIcon />
-                    </Button>
-                  </TableCell>
-                </TableRow>
+                    </button>
+                  </td>
+                </tr>
               ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+            </tbody>
+          </table>
+        </div>
       ) : (
         <p>No items found.</p>
       )}
-    </>
+    </div>
   );
 };
