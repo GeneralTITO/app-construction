@@ -3,7 +3,7 @@ import { UserContext } from "../contexts/UserContext";
 import img from "../assets/imagem_2023-08-29_145452489-removebg-preview.png";
 import { HiUserCircle } from "react-icons/hi";
 const Header: React.FC = () => {
-  const { userLogout }: any = useContext(UserContext);
+  // const { userLogout }: any = useContext(UserContext);
 
   // const handleSair = () => {
   //   userLogout();
