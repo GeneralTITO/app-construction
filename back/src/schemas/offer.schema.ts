@@ -1,4 +1,4 @@
-import { tuple, z } from "zod";
+import { z } from "zod";
 import { userSchema } from "./user.schema";
 import { inputSchema } from "./input.schema";
 
@@ -11,9 +11,8 @@ const offerSchema = z.object({
   updatedAt: z.string().or(z.date()),
   input: inputSchema,
   user: userSchema,
-  input_id: z.number(),
 });
-
+const offerReturnSchema = offerSchema.omit({});
 const offerCreateSchema = offerSchema.omit({
   id: true,
   createdAt: true,
@@ -25,4 +24,4 @@ const offerCreateSchema = offerSchema.omit({
 
 const offerUpdateSchema = offerCreateSchema.partial();
 
-export { offerCreateSchema, offerSchema, offerUpdateSchema };
+export { offerCreateSchema, offerSchema, offerUpdateSchema, offerReturnSchema };

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { userSchema } from "./user.schema";
 
 const inputSchema = z.object({
   id: z.number().positive(),
@@ -15,6 +16,7 @@ const inputCreateSchema = inputSchema.omit({
   id: true,
   createdAt: true,
   updatedAt: true,
+  user: true,
 });
 
 const inputUpdateSchema = inputCreateSchema.partial();

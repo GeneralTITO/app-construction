@@ -10,6 +10,12 @@ import {
   inputSchema,
   inputUpdateSchema,
 } from "./input.schema";
+import {
+  offerCreateSchema,
+  offerSchema,
+  offerUpdateSchema,
+  offerReturnSchema,
+} from "./offer.schema";
 
 export {
   userCreateSchema,
@@ -20,4 +26,8 @@ export {
   inputCreateSchema,
   inputSchema,
   inputUpdateSchema,
+  offerCreateSchema,
+  offerSchema,
+  offerUpdateSchema,
+  offerReturnSchema,
 };
