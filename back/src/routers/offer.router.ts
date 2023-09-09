@@ -31,37 +31,6 @@ offerRouter.get(
   middlewares.isOwner,
   offerController.readAllOfSeller
 );
-// offerRouter.get("/", middlewares.verifyToken, offerController.readAll);
-// offerRouter.get(
-//   "/user/created/:id",
-//   middlewares.userExists,
-//   offerController.readCreatedOfUser
-// );
-// offerRouter.get(
-//   "/user/inprogress/:id",
-//   middlewares.userExists,
-//   offerController.readInProgressOfUser
-// );
-// offerRouter.get(
-//   "/user/accomplished/:id",
-//   middlewares.userExists,
-//   offerController.readAccomplishedOfUser
-// );
-// offerRouter.get(
-//   "/user/:id",
-//   middlewares.userExists,
-//   offerController.readAllOfUser
-// );
-// offerRouter.get("/:idoffer", middlewares.offerExists, offerController.readById);
-
-// offerRouter.patch(
-//   "/:idoffer",
-//   middlewares.offerExists,
-//   middlewares.verifyToken,
-//   middlewares.isofferOwner,
-//   middlewares.validateBody(offerUpdateSchema),
-//   offerController.update
-// );
 
 offerRouter.delete(
   "/:idOffer",

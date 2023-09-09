@@ -27,15 +27,9 @@ const readByIdInput = async (
   return res.status(200).json(offers);
 };
 
-// const update = async (req: Request, res: Response): Promise<Response> => {
-//   const id: number = Number(req.params.id);
-//   const user: UserReturn = await userService.update(req.body, id);
-//   return res.status(200).json(user);
-// };
-
 const destroy = async (req: Request, res: Response): Promise<Response> => {
   await offerService.destroy(res.locals.foundOffer);
   return res.status(204).json();
 };
 
-export default { create, readAllOfSeller, readByIdInput , destroy};
+export default { create, readAllOfSeller, readByIdInput, destroy };
