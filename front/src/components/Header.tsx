@@ -9,8 +9,8 @@ const Header: React.FC = () => {
     userLogout();
   };
   return (
-    <nav className="bg-white shadow mb-5">
-      <div className="max-w-7xl mx-auto px-4">
+    <nav className="bg-white shadow mb-5 absolute w-full">
+      <div className="container  px-4">
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
@@ -21,8 +21,11 @@ const Header: React.FC = () => {
               />
             </div>
           </div>
-          <div className="flex items-center text-[30px]">
-            <HiUserCircle />
+          <div className="flex items-center gap-4 cursor-pointer">
+            <div className="text-[30px]">
+              <HiUserCircle />
+            </div>
+            <span>braia</span>
           </div>
         </div>
       </div>
