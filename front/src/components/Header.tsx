@@ -9,24 +9,16 @@ const Header: React.FC = () => {
   //   userLogout();
   // };
   return (
-    <nav className="bg-white shadow mb-5 absolute w-full">
-      <div className="container  px-4">
-        <div className="flex justify-between h-16">
-          <div className="flex">
-            <div className="flex-shrink-0 flex items-center">
-              <img
-                className="hidden lg:block h-10 w-auto "
-                src={img}
-                alt="Workflow"
-              />
-            </div>
+    <nav className="bg-white shadow absolute w-full">
+      <div className="container  py-3 flex justify-between">
+        <div className="flex">
+          <img className="h-10" src={img} alt="Workflow" />
+        </div>
+        <div className="flex items-center gap-4 cursor-pointer">
+          <div className="text-[30px]">
+            <HiUserCircle />
           </div>
-          <div className="flex items-center gap-4 cursor-pointer">
-            <div className="text-[30px]">
-              <HiUserCircle />
-            </div>
-            <span>braia</span>
-          </div>
+          <span>braia</span>
         </div>
       </div>
     </nav>
