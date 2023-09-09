@@ -6,7 +6,10 @@ import { Lojas } from "../components/Lojas";
 import { Materiais } from "../components/Materiais";
 import { CriarPregao } from "../components/CriarPregao";
 import { PregaoAtivos } from "../components/PregaoAtivos";
-import { PregaoFinalizados } from "../components/pregaoFinalizados";
+import { PregaoFinalizados } from "../components/PregaoFinalizados";
+
+
+
 export const ConstructorHome = () => {
   const { selectedButton }: any = useContext(SidebarContext);
 

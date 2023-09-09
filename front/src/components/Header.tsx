@@ -5,9 +5,9 @@ import { HiUserCircle } from "react-icons/hi";
 const Header: React.FC = () => {
   const { userLogout }: any = useContext(UserContext);
 
-  const handleSair = () => {
-    userLogout();
-  };
+  // const handleSair = () => {
+  //   userLogout();
+  // };
   return (
     <nav className="bg-white shadow mb-5 absolute w-full">
       <div className="container  px-4">
