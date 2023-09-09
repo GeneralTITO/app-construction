@@ -63,10 +63,10 @@ offerRouter.get(
 //   offerController.update
 // );
 
-// offerRouter.delete(
-//   "/:idoffer",
-//   middlewares.offerExists,
-//   middlewares.verifyToken,
-//   middlewares.isofferOwner,
-//   offerController.destroy
-// );
+offerRouter.delete(
+  "/:idOffer",
+  middlewares.offerExists,
+  middlewares.verifyToken,
+  middlewares.isOfferOwner,
+  offerController.destroy
+);

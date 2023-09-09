@@ -6,6 +6,8 @@ import { userExists } from "./userExists.middleware";
 import { validateBody } from "./validadeBody.middleware";
 import { verifyToken } from "./verifyToken.middleware";
 import { isInputOwner } from "./inputOwner.middleware";
+import { isOfferOwner } from "./isOfferOwner.middleware";
+import { offerExists } from "./offerExists.middleware";
 
 export default {
   handleError,
@@ -16,4 +18,6 @@ export default {
   uniqueEmail,
   inputExists,
   isInputOwner,
+  offerExists,
+  isOfferOwner,
 };

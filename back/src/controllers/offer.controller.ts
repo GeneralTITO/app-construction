@@ -26,11 +26,6 @@ const readByIdInput = async (
   const offers = await offerService.readByIdInput(idInput);
   return res.status(200).json(offers);
 };
-// const read = async (req: Request, res: Response): Promise<Response> => {
-//   const userId: number = Number(req.params.id);
-//   const user = await userService.read(userId);
-//   return res.status(200).json(user);
-// };
 
 // const update = async (req: Request, res: Response): Promise<Response> => {
 //   const id: number = Number(req.params.id);
@@ -38,9 +33,9 @@ const readByIdInput = async (
 //   return res.status(200).json(user);
 // };
 
-// const destroy = async (req: Request, res: Response): Promise<Response> => {
-//   await userService.destroy(res.locals.foundEntity);
-//   return res.status(204).json();
-// };
+const destroy = async (req: Request, res: Response): Promise<Response> => {
+  await offerService.destroy(res.locals.foundOffer);
+  return res.status(204).json();
+};
 
-export default { create, readAllOfSeller, readByIdInput };
+export default { create, readAllOfSeller, readByIdInput , destroy};

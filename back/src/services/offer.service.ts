@@ -29,8 +29,13 @@ const readByIdInput = async (idInput: number): Promise<any> => {
   return offers;
 };
 
+const destroy = async (offer: Offer): Promise<void> => {
+  await offerRepository.remove(offer);
+};
+
 export default {
   create,
   readAllOfSeller,
   readByIdInput,
+  destroy,
 };
