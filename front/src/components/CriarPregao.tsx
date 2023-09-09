@@ -91,10 +91,19 @@ export const CriarPregao = () => {
           </div>
         </form>
       </div>
-      <div className="w-[50%] border-2 border-green-500 overflow-y-scroll">
+      <div className="w-[50%] border-2 border-green-500 overflow-y-scroll px-2 py4">
         {itemsCreated &&
           itemsCreated.map((item: Item) => (
-            <div key={item.id}>{item.item_name}</div>
+            <div key={item.id} className=" p-2 border-2 border-black">
+              <div className="flex gap-2">
+                <div>{item.id}</div>
+                <div>{item.item_name}</div>
+                <div>{item.amount}</div>
+                <div>{item.description}</div>
+                <div>{item.expiration}</div>
+                <div>{item.updatedAt}</div>
+              </div>
+            </div>
           ))}
       </div>
     </main>
