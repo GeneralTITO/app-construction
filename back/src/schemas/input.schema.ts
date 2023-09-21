@@ -17,6 +17,7 @@ const inputCreateSchema = inputSchema.omit({
   createdAt: true,
   updatedAt: true,
   user: true,
+  status: true,
 });
 
 const inputUpdateSchema = inputCreateSchema.partial();
