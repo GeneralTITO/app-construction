@@ -53,7 +53,8 @@ export const UserProvider = ({ children }: any) => {
         navigate("/homeSeller");
       }
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
+
       if (error.response?.data.message === "Invalid credentials") {
         toast.error("email ou senha incorretos");
       }

@@ -5,13 +5,16 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./contexts/UserContext.tsx";
 import { PregaoProvider } from "./contexts/PregaoContext";
+import { ChakraProvider } from "@chakra-ui/react";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider>
         <PregaoProvider>
-          <App />
+          <ChakraProvider>
+            <App />
+          </ChakraProvider>
         </PregaoProvider>
       </UserProvider>
     </BrowserRouter>

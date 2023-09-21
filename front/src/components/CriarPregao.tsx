@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useContext, useEffect } from "react";
-import { Item, PregaoContext } from "../contexts/PregaoContext";
+import { PregaoContext } from "../contexts/PregaoContext";
+import { ItemsTable } from "./TableHead";
 
 interface FormData {
   item_name: string;
@@ -29,9 +30,8 @@ export const CriarPregao = () => {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
   const onsubmit = (data: FormData) => {
-    console.log(data);
+    console.error(data);
   };
-  console.log(itemsCreated);
   return (
     <main className="flex justify-around h-full">
       <div className="w-[50%] flex items-center flex-col justify-center border-2 border-yellow-500">
@@ -92,19 +92,7 @@ export const CriarPregao = () => {
         </form>
       </div>
       <div className="w-[50%] border-2 border-green-500 overflow-y-scroll px-2 py4">
-        {itemsCreated &&
-          itemsCreated.map((item: Item) => (
-            <div key={item.id} className=" p-2 border-2 border-black">
-              <div className="flex gap-2">
-                <div>{item.id}</div>
-                <div>{item.item_name}</div>
-                <div>{item.amount}</div>
-                <div>{item.description}</div>
-                <div>{item.expiration}</div>
-                <div>{item.updatedAt}</div>
-              </div>
-            </div>
-          ))}
+        {itemsCreated && <ItemsTable items={itemsCreated} />}
       </div>
     </main>
   );

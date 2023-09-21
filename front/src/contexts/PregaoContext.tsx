@@ -15,10 +15,11 @@ export interface Item {
 }
 
 interface PregaoContextType {
-  createPregao: (data: any, reset: any) => void;
+  createPregao: (data: any, reset: () => void) => void;
   setInProgressPregao: (id: number) => void;
   itemsCreated: Item[] | undefined;
   getInsumos: () => void;
+  editPregao: (data: any, reset: () => void, id_pregao: number) => void;
 }
 
 interface PregaoProviderProps {
@@ -30,16 +31,14 @@ export const PregaoContext = createContext<PregaoContextType | undefined>(
 
 export const PregaoProvider = ({ children }: PregaoProviderProps) => {
   const [itemsCreated, setItemsCreated] = useState<Item[] | undefined>();
-  // const [itemsInProgress, SetItemsInProgress] = useState();
-  // const [itemsaccomplished, SetItemsaccomplished] = useState();
 
   const getInsumos = async () => {
     const userId = localStorage.getItem("@USERID");
-    const response = await api.get(`/pregao/user/created/${userId}`);
+    const response = await api.get<Item[]>(`/pregao/user/created/${userId}`);
     setItemsCreated(response.data);
   };
 
-  const createPregao = async (data: any, reset: any) => {
+  const createPregao = async (data: any, reset: () => void) => {
     try {
       const token = window.localStorage.getItem("@TOKEN");
       const user_id = window.localStorage.getItem("@USERID");
@@ -49,7 +48,8 @@ export const PregaoProvider = ({ children }: PregaoProviderProps) => {
         },
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
+
     } finally {
       toast.success("pregao criado com sucesso!!", {
         position: "top-center",
@@ -62,10 +62,39 @@ export const PregaoProvider = ({ children }: PregaoProviderProps) => {
         theme: "light",
       });
       reset();
+      getInsumos();
     }
   };
 
-  // const deletePregrao = async (id: number) => {};
+  const editPregao = async (
+    data: any,
+    reset: () => void,
+    id_pregao: number
+  ) => {
+    try {
+      const token = window.localStorage.getItem("@TOKEN");
+      await api.patch(`pregao/${id_pregao}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      toast.success("pregao atualizado!!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      reset();
+      getInsumos();
+    }
+  };
 
   const setInProgressPregao = async (id: number) => {
     try {
@@ -80,7 +109,8 @@ export const PregaoProvider = ({ children }: PregaoProviderProps) => {
         }
       );
     } catch (error) {
-      console.log(error);
+      console.error(error);
+
     } finally {
       toast.success("pregao iniciado com sucesso!!", {
         position: "top-center",
@@ -102,6 +132,7 @@ export const PregaoProvider = ({ children }: PregaoProviderProps) => {
         setInProgressPregao,
         itemsCreated,
         getInsumos,
+        editPregao,
       }}
     >
       {children}
