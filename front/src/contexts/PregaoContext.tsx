@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect } from "react";
+import { ReactNode, createContext } from "react";
 import { api } from "../services/api";
 import { toast } from "react-toastify";
 import { useState } from "react";
@@ -19,7 +19,10 @@ interface PregaoContextType {
   setInProgressPregao: (id: number) => void;
   itemsCreated: Item[] | undefined;
   getInsumos: () => void;
-  editPregao: (data: any, reset: () => void, id_pregao: number) => void;
+  editPregao: (data: any, id_pregao: number) => void;
+  deletePregao: (id_pregao: number) => void;
+  getInProgressInputs: () => void;
+  inProgress: Item[] | undefined;
 }
 
 interface PregaoProviderProps {
@@ -31,6 +34,8 @@ export const PregaoContext = createContext<PregaoContextType | undefined>(
 
 export const PregaoProvider = ({ children }: PregaoProviderProps) => {
   const [itemsCreated, setItemsCreated] = useState<Item[] | undefined>();
+  // const [selectedInput, setSelectedInput] = useState<Item[] | undefined>();
+  const [inProgress, setInProgress] = useState<Item[]>();
 
   const getInsumos = async () => {
     const userId = localStorage.getItem("@USERID");
@@ -49,7 +54,6 @@ export const PregaoProvider = ({ children }: PregaoProviderProps) => {
       });
     } catch (error) {
       console.error(error);
-
     } finally {
       toast.success("pregao criado com sucesso!!", {
         position: "top-center",
@@ -66,11 +70,7 @@ export const PregaoProvider = ({ children }: PregaoProviderProps) => {
     }
   };
 
-  const editPregao = async (
-    data: any,
-    reset: () => void,
-    id_pregao: number
-  ) => {
+  const editPregao = async (data: any, id_pregao: number) => {
     try {
       const token = window.localStorage.getItem("@TOKEN");
       await api.patch(`pregao/${id_pregao}`, data, {
@@ -91,7 +91,6 @@ export const PregaoProvider = ({ children }: PregaoProviderProps) => {
         progress: undefined,
         theme: "light",
       });
-      reset();
       getInsumos();
     }
   };
@@ -110,7 +109,6 @@ export const PregaoProvider = ({ children }: PregaoProviderProps) => {
       );
     } catch (error) {
       console.error(error);
-
     } finally {
       toast.success("pregao iniciado com sucesso!!", {
         position: "top-center",
@@ -122,7 +120,39 @@ export const PregaoProvider = ({ children }: PregaoProviderProps) => {
         progress: undefined,
         theme: "light",
       });
+      getInsumos();
     }
+  };
+
+  const deletePregao = async (id_pregao: number) => {
+    try {
+      const token = window.localStorage.getItem("@TOKEN");
+      await api.delete(`pregao/${id_pregao}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      toast.success("pregao deletado!!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      getInsumos();
+      getInProgressInputs();
+    }
+  };
+  const getInProgressInputs = async () => {
+    const userId = localStorage.getItem("@USERID");
+    const response = await api.get<Item[]>(`/pregao/user/inprogress/${userId}`);
+    setInProgress(response.data);
   };
 
   return (
@@ -133,6 +163,9 @@ export const PregaoProvider = ({ children }: PregaoProviderProps) => {
         itemsCreated,
         getInsumos,
         editPregao,
+        deletePregao,
+        getInProgressInputs,
+        inProgress,
       }}
     >
       {children}

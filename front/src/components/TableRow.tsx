@@ -1,6 +1,7 @@
 import {
   Button,
   Flex,
+  FormLabel,
   Input,
   Modal,
   ModalBody,
@@ -28,7 +29,7 @@ const schema = z.object({
   item_name: z.string().min(3).max(255),
   amount: z.string().min(1).max(50),
   description: z.string().max(1000),
-  expiration: z.date(),
+  expiration: z.date().or(z.string()).optional(),
 });
 interface FormData {
   item_name: string;
@@ -38,22 +39,23 @@ interface FormData {
 }
 export const TableRow = ({ item }: TableProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { editPregao }: any = useContext(PregaoContext);
+  const { editPregao, setInProgressPregao }: any = useContext(PregaoContext);
 
   const {
     handleSubmit,
     control,
-    reset,
+
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
 
-  const handleEdit = (item: Item) => {
+  const handleEdit = () => {
     onOpen();
   };
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
+    editPregao(data, item.id);
     onClose();
   };
   return (
@@ -68,8 +70,8 @@ export const TableRow = ({ item }: TableProps) => {
         <Td>{item.expiration}</Td>
         <Td>
           <Flex gap={1}>
-            <Button>ativar</Button>
-            <Button onClick={() => handleEdit(item)}>
+            <Button onClick={() => setInProgressPregao(item.id)}>ativar</Button>
+            <Button onClick={() => handleEdit()}>
               <BiEditAlt />
             </Button>
             <Button>
@@ -85,6 +87,7 @@ export const TableRow = ({ item }: TableProps) => {
           <ModalCloseButton />
           <form onSubmit={handleSubmit(onSubmit)}>
             <ModalBody>
+              <FormLabel>item name</FormLabel>
               <Controller
                 name="item_name"
                 control={control}
@@ -95,6 +98,7 @@ export const TableRow = ({ item }: TableProps) => {
               />
               {errors.item_name && <span>{errors.item_name.message}</span>}
 
+              <FormLabel>quantidade</FormLabel>
               <Controller
                 name="amount"
                 control={control}
@@ -105,6 +109,7 @@ export const TableRow = ({ item }: TableProps) => {
               />
               {errors.amount && <span>{errors.amount.message}</span>}
 
+              <FormLabel>descrição</FormLabel>
               <Controller
                 name="description"
                 control={control}
@@ -115,12 +120,13 @@ export const TableRow = ({ item }: TableProps) => {
               />
               {errors.description && <span>{errors.description.message}</span>}
 
+              <FormLabel>expiração</FormLabel>
               <Controller
                 name="expiration"
                 control={control}
-                defaultValue={item.expiration}
                 render={({ field }) => (
                   <Input
+                    defaultValue={item.expiration}
                     {...field}
                     type="date"
                     placeholder="Data de Expiração"

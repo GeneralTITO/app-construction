@@ -1,5 +1,6 @@
 import { Table, Thead, Tr, Th, Tbody, Box } from "@chakra-ui/react";
-import { TableRow } from "./TableRow";
+
+import { TableRowAtivos } from "./TableRow";
 
 interface Item {
   id: number;
@@ -16,7 +17,7 @@ interface TableProps {
   items: Item[];
 }
 
-export const ItemsTable: React.FC<TableProps> = ({ items }) => {
+export const ItemsTableAtivos: React.FC<TableProps> = ({ items }) => {
   return (
     <Box overflowX="auto">
       <Table variant="striped" colorScheme="blue" size="sm">
@@ -32,7 +33,7 @@ export const ItemsTable: React.FC<TableProps> = ({ items }) => {
         </Thead>
         <Tbody>
           {items.map((item) => (
-            <TableRow key={item.id} item={item} />
+            <TableRowAtivos key={item.id} item={item} />
           ))}
         </Tbody>
       </Table>
