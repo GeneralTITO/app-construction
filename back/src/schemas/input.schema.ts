@@ -7,7 +7,7 @@ const inputSchema = z.object({
   amount: z.string().max(250),
   description: z.string().max(1000).min(1),
   expiration: z.string(),
-  status: z.enum(["created", "in_progress", "accomplished"]),
+  status: z.enum(["created", "in_progress", "accomplished"]).optional(),
   createdAt: z.string().or(z.date()),
   updatedAt: z.string().or(z.date()),
 });
@@ -17,7 +17,6 @@ const inputCreateSchema = inputSchema.omit({
   createdAt: true,
   updatedAt: true,
   user: true,
-  status: true,
 });
 
 const inputUpdateSchema = inputCreateSchema.partial();
